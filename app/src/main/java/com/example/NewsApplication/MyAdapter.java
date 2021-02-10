@@ -1,5 +1,8 @@
 package com.example.NewsApplication;
 
+import android.content.Context;
+import android.net.Uri;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,7 +10,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.recyclerview.widget.RecyclerView;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
 
@@ -33,8 +37,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(List<NewsData> myDataset) {
+    public MyAdapter(List<NewsData> myDataset, Context context) {
         mDataset = myDataset;
+        Fresco.initialize(context);
     }
 
     // Create new views (invoked by the layout manager)
@@ -55,13 +60,18 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public void onBindViewHolder(MyViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-    //    holder.TextView_title.setText(mDataset[position]);
 
+        holder.TextView_title.setText(mDataset.get(position).getTitle());
+        holder.TextView_content.setText(mDataset.get(position).getContent());
+
+        NewsData news = new NewsData();
+        Uri uri = Uri.parse(news.getUrlToImage());
+        holder.ImageView_title.setImageURI(uri);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return 0;
+        return mDataset.size();
     }
 }

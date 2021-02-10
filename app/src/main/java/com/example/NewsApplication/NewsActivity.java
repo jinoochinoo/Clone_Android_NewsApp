@@ -2,10 +2,9 @@ package com.example.NewsApplication;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -26,7 +25,6 @@ public class NewsActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private List<NewsData> mDataset;
 
     RequestQueue queue;
 
@@ -50,7 +48,7 @@ public class NewsActivity extends AppCompatActivity {
 
     public void getNews(){
 
-        String url ="https://newsapi.org/v2/everything?q=bitcoin&apiKey=d6b5d0172d0346278db2d6500b65a79d";
+        String url ="https://newsapi.org/v2/top-headlines?country=kr&${query}&apiKey=195a6caa0795496c978924a8ae64fcb2";
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -58,7 +56,7 @@ public class NewsActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
-                        Log.d("news", response);
+                        // Log.d("news", response);
 
                         try{
                             JSONObject jsonObj = new JSONObject(response);
@@ -82,7 +80,7 @@ public class NewsActivity extends AppCompatActivity {
                             }
 
                             // adapter 세팅
-                            mAdapter = new MyAdapter(mDataset);
+                            mAdapter = new MyAdapter(news, NewsActivity.this);
                             mRecyclerView.setAdapter(mAdapter);
 
                         } catch(JSONException e){

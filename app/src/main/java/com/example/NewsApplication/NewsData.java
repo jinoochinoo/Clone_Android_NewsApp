@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 public class NewsData implements Serializable {
 
-    private String title;
-    private String urlToImage;
-    private String content;
+    private String title; // 제목
+    private String urlToImage; // 뉴스 이미지 url
+    private String content; // 뉴스 내용
 
     public String getTitle() {
         return title;
